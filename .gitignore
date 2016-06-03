@@ -1,6 +1,7 @@
-.DS_Store
+Icon^M^M.DS_Store
 npm-debug.log
 *.zip
 *.app
 www/protocols/*
 !www/protocols/default
+Icon^M^M
