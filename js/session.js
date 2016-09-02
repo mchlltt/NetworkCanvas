@@ -1,4 +1,4 @@
-/* global document, window, $, protocol, nodeRequire, note, CryptoJS */
+/* global document, window, $, protocol, nodeRequire, note */
 /* exported Session, eventLog */
 var Session = function Session() {
     'use strict';
@@ -74,6 +74,7 @@ var Session = function Session() {
             session.updateSessionData({sessionParameters:study.sessionParameters});
             // copy the stages
             session.stages = study.stages;
+            session.protocolData = study.data;
 
             // insert the stylesheet
             $('head').append('<link rel="stylesheet" href="protocols/'+window.netCanvas.studyProtocol+'/css/style.css" type="text/css" />');
@@ -308,6 +309,7 @@ var Session = function Session() {
             var gui = nodeRequire('nw.gui');
             var saltedKey = session.getSaltedKey();
             var text = JSON.stringify(data, undefined, 2); // indentation level = 2;
+            var CryptoJS = require('crypto-js');
             var encrypted = CryptoJS.AES.encrypt(text, saltedKey);
             var path = nodeRequire('path');
             var fileName = Math.floor(Date.now() / 1000).toString();
@@ -339,6 +341,7 @@ var Session = function Session() {
     };
 
     session.saveManager = function() {
+        note.trace('session.saveManager()');
         clearTimeout(saveTimer);
         saveTimer = setTimeout(session.saveData, 3000);
     };
@@ -438,11 +441,15 @@ var Session = function Session() {
         // Transition the content
         var newStage = stage;
         var stagePath ='./protocols/'+window.netCanvas.studyProtocol+'/stages/'+session.stages[stage].page;
-        content.transition({opacity: '0'},400,'easeInSine').promise().done( function(){
-            content.load( stagePath, function() {
-                content.transition({ opacity: '1'},400,'easeInSine');
+        content.addClass('stageHidden');
+        setTimeout(function(){
+            content.load(stagePath, function() {
+                setTimeout(function() {
+                    content.removeClass('stageHidden');
+                }, 200);
+
             });
-        });
+        }, 200);
 
         var oldStage = currentStage;
         currentStage = newStage;

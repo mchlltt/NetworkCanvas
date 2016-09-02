@@ -1,7 +1,10 @@
 Icon^M^M.DS_Store
 npm-debug.log
-*.zip
 *.app
+*.zip
+build/
+buildTmp/
+buildTmp/*
 www/protocols/*
 !www/protocols/default
 Icon^M^M

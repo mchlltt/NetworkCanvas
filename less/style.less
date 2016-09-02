@@ -9,7 +9,9 @@ Import Bootstrap LESS and Site Specific LESS
 @import 'less/map.less';
 @import 'less/loader.less';
 @import 'bower_components/bs-datetimepicker/src/less/bootstrap-datetimepicker.less';
+@import 'bower_components/bootstrap-select/less/bootstrap-select.less';
 @import (inline) 'bower_components/leaflet/dist/leaflet.css';
+@import (inline) 'bower_components/jquery-ui/themes/base/jquery-ui.min.css';
 @import 'bower_components/components-font-awesome/less/font-awesome.less';
 @import 'bower_components/bootstrap3-dialog/src/less/bootstrap-dialog.less';
 @import (inline) 'bower_components/lato/css/lato.css';
@@ -34,6 +36,16 @@ html, body {
 .not-listed {
     position:absolute;
     z-index:999;
+}
+
+.leaflet-popup.top {
+    z-index:9999;
+}
+
+
+// override bootstrap select width
+.bootstrap-select:not([class*=col-]):not([.input-group-btn]) {
+  width:auto;
 }
 
 input[type=number]::-webkit-inner-spin-button,
@@ -337,6 +349,12 @@ div[data-toggle="buttons"] label:active, div[data-toggle="buttons"] label.active
     align-items: center;
     justify-content: center;
     overflow:hidden;
+    opacity: 1;
+    transition: 0.2s all ease-in-out;
+}
+
+.content.stageHidden {
+    opacity: 0;
 }
 
 
@@ -411,7 +429,8 @@ div[data-toggle="buttons"] label:active, div[data-toggle="buttons"] label.active
     padding:30px !important;
     background: black;
     position:absolute;
-    bottom:30px;
+    // bottom:30px;
+    bottom: 90px;
     left:90px;
     border-radius: 12px;
 }
@@ -628,6 +647,39 @@ div[data-toggle="buttons"] label:active, div[data-toggle="buttons"] label.active
     transition: all 0.3s ease-in-out;
 }
 
+.venue.inner-card {
+    height:190px;
+    margin-bottom:1.5em;
+    background: @brand-info;
+    border:10px solid darken(@brand-info, 5%);
+    border-radius: 10px;
+    text-align: center;
+    display:inline-flex;    // align-items: center;
+    justify-content: center;
+    flex-direction:column;
+    width:100%;
+    word-wrap: break-word;
+    cursor: pointer; cursor: hand;
+    transition: all 0.3s ease-in-out;
+}
+
+.app.inner-card {
+    height:190px;
+    margin-bottom:1.5em;
+    background: @brand-success;
+    border:10px solid darken(@brand-success, 5%);
+    border-radius: 10px;
+    text-align: center;
+    display:inline-flex;    // align-items: center;
+    justify-content: center;
+    flex-direction:column;
+    width:100%;
+    word-wrap: break-word;
+    cursor: pointer; cursor: hand;
+    transition: all 0.3s ease-in-out;
+}
+
+
 .inner-card.delete {
     background:@brand-danger;
     border-color:@brand-danger;
@@ -660,6 +712,168 @@ div[data-toggle="buttons"] label:active, div[data-toggle="buttons"] label.active
     max-height:75vh;
     overflow:scroll;
     min-height:70vmin;
+}
+
+// List select mod for plotme
+
+.service-list-container {
+    width:100%;
+    margin:0 auto;
+    margin-top:170px;
+    height:84vh;
+    overflow-x: scroll;
+    padding:5px;
+    text-align: center;
+}
+
+.service-list-container .item {
+    cursor: pointer; cursor: hand;
+    border-radius: 10px;
+    background:#eee;
+    border:2px solid #eee;
+    color:black;
+    transition: all 1s ease;
+    width:51%;
+    display: inline-block;
+    padding: 20px;
+    margin-bottom:20px;
+}
+
+.service-list-container .item.selected {
+    background: @brand-success;
+    border-color: @brand-success;
+}
+
+.service-list-container .item .inner {
+
+}
+
+.select-icon {
+    font-size:1.6em;
+}
+
+.service-list-container .item.selected {
+    color: white !important;
+}
+
+.service-list-container .item h3 {
+    margin:0;
+    padding: 10px;
+}
+
+.well {
+    margin-bottom: 0;
+    background: transparent;
+    box-shadow: none;
+    border: 0;
+}
+
+.btn-select {
+    background: white;
+    color: black;
+}
+
+@select-color: rgb(255, 223, 0);
+
+.btn-select.selected {
+    background: @select-color;
+    color:black;
+}
+
+.well .btn-group.big-check {
+    padding: 0;
+}
+
+.well label input[type=radio]~i.fa.fa-circle-o, .well .check-number {
+    color: white;
+    font-weight:normal;
+}
+
+.well label input[type=radio]:checked~i.fa.fa-check-circle-o {
+    color: #00FFF7;
+}
+
+.check label{
+ left:40px;
+ position:relative;
+ margin-bottom:20px;
+ font-size: @font-size-base;
+}
+
+
+input.faChkRnd, input.faChkSqr {
+  visibility: hidden;
+}
+
+input.faChkRnd:checked:after, input.faChkRnd:after,
+input.faChkSqr:checked:after, input.faChkSqr:after {
+  visibility: visible;
+  font-family: FontAwesome;
+  font-size:2em;
+  height: 1em;
+  width: 1em;
+  position: relative;
+  top: -12px;
+  background-color:transparent;
+  display: inline-block;
+}
+
+input.faChkRnd:checked:after {
+  content: '\f058';
+}
+
+input.faChkRnd:after {
+  content: '\f10c';
+}
+
+input.faChkSqr:checked:after {
+  content: '\f14a';
+}
+
+input.faChkSqr:after {
+  content: '\f096';
+}
+
+.check-row {
+    padding-left:40px;
+}
+
+// name gen mod
+.venue-list-container {
+    width:100%;
+    margin:0 auto;
+    height:84vh;
+    overflow-x: scroll;
+    padding:5px;
+    text-align: center;
+}
+
+.venue-list-container .item {
+    height:110px;
+    width:24%;
+    display:inline-block;
+    padding:8px;
+    float: left;
+}
+
+.venue-list-container .item .inner {
+    display:inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer; cursor: hand;
+    border-radius: 10px;
+    background:#eee;
+    border:2px solid #eee;
+    color:black;
+    // padding:1.5vmin;
+    width:100%;
+    height:100%;
+}
+
+.venue-list-container .item h3 {
+    display:inline;
+    margin:0;
 }
 
 
@@ -860,6 +1074,10 @@ div[data-toggle="buttons"] label:active, div[data-toggle="buttons"] label.active
     padding: 20px;
 }
 
+.form-group {
+    position:relative;
+}
+
 
  // Node bucket
 
@@ -922,29 +1140,28 @@ div[data-toggle="buttons"] label:active, div[data-toggle="buttons"] label.active
     justify-content: center;
     border-radius: 50%;
     text-shadow: 0px 1px 5px rgba(0,0,0,0.5);
-    transition: all 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+    transition: all 0.25s ease-in-out;
     height:21vw;
     width:21vw;
 
  }
 
- .node-bin.dropped {
-     animation-duration: 0.5s;
-     animation-fill-mode: both;
-     animation-name: dropped;
-     z-index:9999;
- }
+ // .node-bin.dropped {
+ //     animation-duration: 0.25s;
+ //     animation-name: dropped;
+ //     z-index:9999;
+ // }
 
  .node-bin.yellow {
      background:rgb(255, 199, 0);
      transform: scale(0.9);
  }
 
- @keyframes dropped {
-    0% {transform: scale(1)}
-    50% {transform: scale(1.3)}
-    100% {transform: scale(1)}
-}
+//  @keyframes dropped {
+//     0% {transform: scale(1.1)}
+//     50% {transform: scale(1.3)}
+//     100% {transform: scale(1)}
+// }
 
  .node-bin-active {
     height: 90vh !important;
@@ -1187,6 +1404,42 @@ div[data-toggle="buttons"] label:active, div[data-toggle="buttons"] label.active
     position:absolute;
 }
 
+// Venue Generator
+
+.newVenueBox {
+    position:absolute;
+    top:15vh;
+    left:30vw;
+    right: 30vw;
+    padding:4vmin;
+    min-height: 580px;
+    max-height:75vmin;
+    border-radius:12px;
+    background:#eee;
+    transform: translateY(-100vh);
+    opacity: 0;
+    z-index:22;
+    transition: all 0.5s ease-in-out;
+}
+
+.newVenueBox > * {
+    transition: all 0.3s ease-in-out;
+}
+
+
+.newVenueBox.content-hidden > * {
+    opacity:0;
+}
+
+@media (max-width: 1024px) {
+    .newVenueBox {
+        top:10vmin;
+        left:20vw;
+        right: 20vw;
+        height:auto;
+    }
+}
+
 // Name Generator
 
 .newNodeBox {
@@ -1328,7 +1581,7 @@ input[type="checkbox"] {
 .selected {
     border-color: #ffee00;
     // background: rgba(255, 215, 0, 0);
-    background:rgba(230,230,230,0.3);
+    // background:rgba(230,230,230,0.3);
     color: rgba(255, 255, 255, 1);
 }
 
