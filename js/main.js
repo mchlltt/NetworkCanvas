@@ -138,14 +138,14 @@ $(document).ready(function() {
     }
 
     var protocolExists = function(protocol, callback) {
-        var response = false;
-        var availableProtocols = ['radar-protocol', 'default', 'dphil-protocol'];
 
-        if (availableProtocols.indexOf(protocol) !== -1) {
-            response = true;
-        }
+        $.get('protocols/'+protocol+'/protocol.js')
+            .done(function() {
+                callback(true);
+            }).fail(function() {
+                callback(false);
+        });
 
-        callback(response);
     };
 
     // Require tools
