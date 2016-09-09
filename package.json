@@ -34,7 +34,6 @@
     "concat-files": "~0.1.0",
     "cssnano": "^3.7.4",
     "globule": "^0.2.0",
-    "grunt": "^1.0.1",
     "grunt-bower-concat": "^1.0.0",
     "grunt-browserify": "^5.0.0",
     "grunt-cli": "^1.2.0",
