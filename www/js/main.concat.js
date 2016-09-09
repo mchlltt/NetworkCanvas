@@ -7275,7 +7275,7 @@ module.exports = function ServiceGenerator() {
                         "Community Supportive Living Systems",
                         "CommunityHealth - Englewood",
                         "CommunityHealth - West Town",
-                        "Cook County - Children’s Advocacy Center",
+                        "Cook County - Children's Advocacy Center",
                         "Cook County - Englewood Health Center",
                         "Cook County - Fantus Health Center",
                         "Cook County - John Sengstacke Health Center",
